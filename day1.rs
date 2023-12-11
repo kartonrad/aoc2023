@@ -1,3 +1,29 @@
+use std::str::FromStr;
+
+const replacers : [&str; 9] = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+
+
+fn main() {
+    let outp = puzzle_input.lines().map(|line: &str| {
+        let mut line : String = String::from(line);
+        replacers.iter().enumerate().for_each(|strr: (usize, &&str) | {
+            let nr = strr.0 + 1;
+            let strr = strr.1;
+            line = line.replace(strr, &format!("{strr}{nr}{strr}"));
+        });
+        println!("{line}");
+    
+        i32::from_str(&String::from(
+            line.chars().find(char::is_ascii_digit).unwrap()
+        )).unwrap() * 10
+        + i32::from_str(&String::from(
+            line.chars().rfind(char::is_ascii_digit).unwrap()
+        )).unwrap()
+    }).reduce(|a,b| a + b).unwrap();
+    
+    println!("Sum of Calibration values: {}", outp);
+}
+
 
 
 const puzzle_input : &str = r##"14gxqgqsqqbxfpxnbccjc33eight
@@ -1000,33 +1026,5 @@ jone4ccn8
 nftdkmtmcz4
 nlnineeightmndkqz8nineonenrqm
 nrhdxfsqvxcbcghf35eightthreeseven5"##;
-
-use std::str::FromStr;
-
-const replacers : [&str; 9] = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-
-
-fn main() {
-    let outp = puzzle_input.lines().map(|line: &str| {
-        let mut line : String = String::from(line);
-        replacers.iter().enumerate().for_each(|strr: (usize, &&str) | {
-            let nr = strr.0 + 1;
-            let strr = strr.1;
-            line = line.replace(strr, &format!("{strr}{nr}{strr}"));
-        });
-        println!("{line}");
-    
-        i32::from_str(&String::from(
-            line.chars().find(char::is_ascii_digit).unwrap()
-        )).unwrap() * 10
-        + i32::from_str(&String::from(
-            line.chars().rfind(char::is_ascii_digit).unwrap()
-        )).unwrap()
-    }).reduce(|a,b| a + b).unwrap();
-    
-    println!("Sum of Calibration values: {}", outp);
-}
-
-
 
 
