@@ -3,6 +3,19 @@ use std::str::FromStr;
 const replacers : [&str; 9] = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
 
+fn main_part1() {
+    let outp = puzzle_input.lines().map(|line: &str| {  
+        i32::from_str(&String::from(
+            line.chars().find(char::is_ascii_digit).unwrap()
+        )).unwrap() * 10
+        + i32::from_str(&String::from(
+            line.chars().rfind(char::is_ascii_digit).unwrap()
+        )).unwrap()
+    }).reduce(|a,b| a + b).unwrap();
+    
+    println!("Sum of Calibration values: {}", outp);
+}
+
 fn main() {
     let outp = puzzle_input.lines().map(|line: &str| {
         let mut line : String = String::from(line);
@@ -11,7 +24,6 @@ fn main() {
             let strr = strr.1;
             line = line.replace(strr, &format!("{strr}{nr}{strr}"));
         });
-        println!("{line}");
     
         i32::from_str(&String::from(
             line.chars().find(char::is_ascii_digit).unwrap()
